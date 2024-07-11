@@ -3,27 +3,26 @@
 
 import { getBasicInformation } from "@/actions/dbaction";
 import { AboutMe } from "@/components/aboutme";
+import Certifications from "@/components/certifications";
 import  ChatBotView  from "@/components/chatBot";
+import Educations from "@/components/educations";
 import { FirstView } from "@/components/firstView";
+import SkillsComponent from "@/components/skillsComponent";
 import { SupportView } from "@/components/SupportView";
 import { TopNav } from "@/components/topNav";
-import { BasicInformation } from "@/dataModel/basicInformation";
-import dynamic from 'next/dynamic'
+// import dynamic  from 'next/dynamic' 
+// const SkillsComponent = dynamic(() => import('@/components/skillsComponent'))
+// const CertificationComponent = dynamic(() => import('@/components/certifications'))
+// const EducationsComponent = dynamic(() => import('@/components/educations'))
 
-//import { useEffect, useState } from "react";
 
-// Client Components:
-const SkillsComponent = dynamic(() => import('@/components/skillsComponent'))
-const CertificationComponent = dynamic(() => import('@/components/certifications'))
-const EducationsComponent = dynamic(() => import('@/components/educations'))
 
-//export const revalidate = 3600
+
 
 export default async function Home() {
 
   const basicInformation = await getBasicInformation()
-  
-
+  //revalidatePath("/")
 
   return (
     <div className=" bg-slate-50 w-screen">
@@ -40,13 +39,19 @@ export default async function Home() {
                  <AboutMe basicInfo={basicInformation}/>
               </div>
               <div id="Education">
-                <EducationsComponent name={basicInformation.name} />
+               
+                  <Educations name={basicInformation.name} />
+                
               </div>
               <div id="Skills">
-                 <SkillsComponent name ={basicInformation.name}  />
+                
+                    <SkillsComponent name ={basicInformation.name}  />
+                 
               </div>
               <div id="Certification">
-                 <CertificationComponent name ={basicInformation.name}/>
+                  
+                      <Certifications name ={basicInformation.name}/>
+                 
               </div>
               <div>
                  <SupportView />

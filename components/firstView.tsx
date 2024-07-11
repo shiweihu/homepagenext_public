@@ -6,7 +6,7 @@ import { IconButton } from "./iconButton";
 
 export async function FirstView({basicInfo}:{basicInfo:BasicInformation}){
 
-    const resumeUrl = await generateSignedUrl(basicInfo.resume_key)
+    const resumeUrl = await generateSignedUrl(basicInfo.resume_key,3600)
     return (
         <div className=" absolute top-0 w-full h-full flex items-center justify-center bg-[#FFC0CB]">
             <div className="z-0 ">

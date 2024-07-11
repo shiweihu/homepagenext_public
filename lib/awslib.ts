@@ -42,13 +42,13 @@ function ReadMyInfo() {
     return s3.send(commond)
 }
 
-function signedUrl(objKey:string){
-  console.debug("signedUrl S3_BUCKETNAME",process.env.S3_BUCKETNAME)
+function signedUrl(objKey:string,revalidate:number){
+    console.debug("signedUrl objKey",objKey)
     const commond = new GetObjectCommand({ 
         Bucket:process.env.S3_BUCKETNAME,
         Key:objKey
     })
-    return getSignedUrl(s3,commond,{expiresIn:3600})
+    return getSignedUrl(s3,commond,{expiresIn:revalidate})
 }
 
 

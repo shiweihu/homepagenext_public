@@ -1,8 +1,8 @@
 'use server'
 import {signedUrl,ReadMyInfo} from "@/lib/awslib";
 
-export async function generateSignedUrl (objectKey: string)  {
-    return signedUrl(objectKey)
+export async function generateSignedUrl (objectKey: string,revalidate:number)  {
+    return signedUrl(objectKey,revalidate)
 };
 
 export async function readMyInfo(){
