@@ -25,7 +25,7 @@ export function TopNav(){
     }
 
     return (
-        <div className={`h-16 w-full flex flex-row justify-center ${scrollY > 500 ? "bg-black opacity-85":""}`}>
+        <div className={`h-16 w-full flex flex-row justify-center ${scrollY > 300 ? "bg-black opacity-85":""}`}>
             <div className="  flex flex-row justify-center items-center ">
             {
                 tags.map((item,index)=>(

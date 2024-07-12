@@ -1,9 +1,12 @@
 'use server'
 import {signedUrl,ReadMyInfo} from "@/lib/awslib";
+import {unstable_cache as nextCache} from 'next/cache'
 
-export async function generateSignedUrl (objectKey: string,revalidate:number)  {
-    return signedUrl(objectKey,revalidate)
-};
+
+
+export async function generateSignedUrl(objectKey: string,revalidateSec:number){
+    return signedUrl(objectKey,revalidateSec)
+}
 
 export async function readMyInfo(){
     

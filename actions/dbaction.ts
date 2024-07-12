@@ -10,7 +10,9 @@ import { Skills } from "@/dataModel/skills";
 
 import { unstable_cache as NextCache} from 'next/cache'
 
-export const getBasicInformation = cache(async ()=>{
+import {revalidateSec} from '@/constant/constant'
+
+export const getBasicInformation = NextCache(async ()=>{
     const params = {
         TableName: 'baseInformation',
         Key: {
@@ -18,9 +20,9 @@ export const getBasicInformation = cache(async ()=>{
         }
       };
       return (await dynamodb.get(params)).Item as BasicInformation;
-})
+},['getBasicInformation'],{revalidate:revalidateSec})
 
-export const getSkills = cache( async (name:string)=>{
+export const getSkills = NextCache( async (name:string)=>{
   const params = {
     TableName: 'skills_table',
     KeyConditionExpression: '#pk = :pkValue',
@@ -34,7 +36,7 @@ export const getSkills = cache( async (name:string)=>{
   
   return (await dynamodb.query(params)).Items as Skills[];
   
-})
+},['getSkills'],{revalidate:revalidateSec})
 
 export const  getEducations = NextCache(async (name:string)=>{
   console.debug("getEducations")
@@ -50,11 +52,11 @@ export const  getEducations = NextCache(async (name:string)=>{
     };
     var educations =  (await dynamodb.query(params)).Items as Education[] ;
     educations = await Promise.all(educations.map(async (item)=>{
-      item.image_signUrl = await generateSignedUrl(item.uni_icon_key,3600)
+      item.image_signUrl = await generateSignedUrl(item.uni_icon_key,revalidateSec+60)
       return item
     }))
     return educations
-},['getEducations'],{revalidate:3600})
+},['getEducations'],{revalidate:revalidateSec})
 
 
 export  const  getCertifications = NextCache(async (name:string)=>{
@@ -71,8 +73,8 @@ export  const  getCertifications = NextCache(async (name:string)=>{
   };
   var certifications =  (await dynamodb.query(params)).Items as Certification[] ;
   certifications = await Promise.all(certifications.map(async (item)=>{
-    item.image_signUrl = await generateSignedUrl(item.objectKey,3600)
+    item.image_signUrl = await generateSignedUrl(item.objectKey,revalidateSec+60)
     return item
   }))
   return certifications
-},['getCertifications'],{revalidate:3600})
+},['getCertifications'],{revalidate:revalidateSec})

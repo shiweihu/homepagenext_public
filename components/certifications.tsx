@@ -1,13 +1,25 @@
+'use client'
 import { getCertifications } from "@/actions/dbaction";
 import { BasicInformation } from "@/dataModel/basicInformation";
 import { BadgeViews } from "./badgeViews";
 import { Certification } from "@/dataModel/certifications";
-import { Suspense } from "react";
+import { Suspense ,useEffect,useState} from "react";
 
 
-export default async function Certifications({name}:{name:string}) {
+export default function Certifications({name}:{name:string}) {
 
-    const certifications = await getCertifications(name)
+
+    const [certifications,setCertifications] = useState<Certification[]>([])
+
+    useEffect(()=>{
+        const fetchCertificationData = async ()=>{
+            setCertifications(await getCertifications(name))
+        }
+        fetchCertificationData()
+    },[])
+    
+
+
     return (
         <div className="w-full bg-white flex flex-col justify-center items-center ">
             <h1 className=" font-bold text-4xl mt-2">CERTIFICATIONS</h1>

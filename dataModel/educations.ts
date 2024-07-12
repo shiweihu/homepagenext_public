@@ -6,4 +6,5 @@ export interface Education{
     period:string;
     uni_icon_key:string;
     image_signUrl:string;
+    degree:string;
 }
