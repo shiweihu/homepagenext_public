@@ -25,7 +25,7 @@ export function  BubbleBackground() {
       ];
       
     const createBubble = () => {
-      const radius = Math.max(Math.random() * 300,10);
+      const radius = Math.max(Math.random() * 300,50);
       const x = Math.random() * (canvas.width - radius * 2) + radius;
       const y = Math.random() * (canvas.height - radius * 2) + radius;
       const speedX = Math.max(Math.random() * 3,1) ;

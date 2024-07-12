@@ -16,7 +16,7 @@ import {readMyInfo} from "@/actions/buketAction";
   const genAI = new GoogleGenerativeAI(apiKey!);
   
   const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-pro",
+    model: "gemini-1.5-flash",
   });
   
   const generationConfig = {
@@ -52,6 +52,18 @@ import {readMyInfo} from "@/actions/buketAction";
         },
       ]
 
+  
+      var i = 0
+      while(i !== chatHistory.length){
+          if (chatHistory[i] === 'error' && i > 0 && i%2 === 1) {
+              chatHistory.splice(i-1,2)
+              i=0
+              continue
+          }
+          i++
+      }
+
+
       const chatHistoryArr = chatHistory.map((value,index)=>{
         if(index % 2 == 0){
           return {
@@ -77,8 +89,14 @@ import {readMyInfo} from "@/actions/buketAction";
       history: history,
     });
     
+    try{
+      return  (await chatSession.sendMessage(newMessage)).response.text();
+    }catch(e){
+      console.error("askAI",e)
+      return "error"
+    }
   
-    return  (await chatSession.sendMessage(newMessage)).response.text();
+    
   
     
   }

@@ -18,8 +18,8 @@ export default function ChatBotView(){
         setIsSending(true)
         const currentMessage = message
         setMessage("")
-        setChatList( prevChatList => [...prevChatList, currentMessage] )
-        const aiResponse =  await askAI(chatList.slice(-10),currentMessage)
+        setChatList( prevChatList => [...prevChatList,currentMessage] )
+        const aiResponse =  await askAI(chatList.slice(-4),currentMessage) ?? "error"
         //console.log("AI response"+aiResponse)
         setChatList( prevChatList => [...prevChatList, aiResponse] )
         setIsSending(false)
@@ -32,7 +32,7 @@ export default function ChatBotView(){
                     <Image className="hover:scale-105" src="/chat_bot.png" alt="chat icon" width={50} height={50} />
                 </button>
              </div>
-             {open && <div style={{height:700, width:500}}>
+             {open && <div style={{height:800, width:700}}>
                 <ChatView isSending = {isSending} chatList={chatList} defaultMessage={message} onChange={(value)=>setMessage(value)} onSend={sendMessageToAI} />
                 </div>
              }
@@ -77,7 +77,7 @@ function ChatView({isSending,chatList,defaultMessage,onChange,onSend}:{isSending
                         :
                         <div key={index} className=" w-full flex flex-col mt-2 mb-2">
                             <p className=" place-self-end font-bold">AI</p>
-                            <div className="w-full" dangerouslySetInnerHTML={{__html:marked(item)}} ></div>
+                            <div className="w-full" dangerouslySetInnerHTML={{__html:marked( item !== 'error' ? item :'error,try it late' )}} ></div>
                         </div>
                 ))
             }
