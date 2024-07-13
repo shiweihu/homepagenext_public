@@ -20,6 +20,7 @@ export function AboutMe({basicInfo}:{basicInfo: BasicInformation}){
     return(
         <div ref={ref}  className=" flex justify-center item.length >0 ? s-center bg-slate-200 ">
             <motion.div  initial={{ x: - 2000 }} animate={{x: isInView ? 0 : -2000 }}
+            <motion.div  initial={{ x: - 1000 }} animate={{x: isInView ? 0 : -1000 }}
                         transition={{ type: "spring" ,duration: 2}} 
                         className=" flex flex-col w-1/2  py-32 ">
                 <p className=" font-bold text-2xl ">About Me</p>
