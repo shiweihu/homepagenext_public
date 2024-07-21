@@ -19,7 +19,7 @@ export default function ChatBotView(){
         const currentMessage = message
         setMessage("")
         setChatList( prevChatList => [...prevChatList,currentMessage] )
-        const aiResponse =  await askAI(chatList.slice(-4),currentMessage) ?? "error"
+        const aiResponse =  await askAI(chatList.slice(-2),currentMessage) ?? "error"
         //console.log("AI response"+aiResponse)
         setChatList( prevChatList => [...prevChatList, aiResponse] )
         setIsSending(false)
@@ -59,12 +59,20 @@ function ChatView({isSending,chatList,defaultMessage,onChange,onSend}:{isSending
         }
       }, [chatList]);
 
+        // 监听回车键事件
+    const handleKeyPress = (event:React.KeyboardEvent) => {
+        if (event.key === 'Enter' && !isSending) {
+            onSend();
+        }
+    };
+    
+
     return (
         <div className="w-full h-full grow   bg-indigo-50 border-2 border-gray-500  p-4 shadow-lg rounded-lg flex flex-col-reverse ">
-            <button type="button"  disabled={!defaultMessage.trim() || isSending } onClick={onSend} className={` ${ isSending ? "cursor-progress":"cursor-pointer"  }  px-5 py-3 rounded-lg bg-blue-400  shadow-md hover:scale-105 mt-2`} >
-                <p className="text-gray-600">{isSending?"Sending...":"Send"}</p>
+            <button type="button" tabIndex={0}  disabled={!defaultMessage.trim() || isSending }  onClick={onSend} className={` ${ isSending ? "cursor-progress":"cursor-pointer"  }  px-5 py-3 rounded-lg bg-blue-400  shadow-md hover:scale-105 mt-2 mx-5 `} >
+                <p className="text-black ">{isSending?"Sending...":"Send"}</p>
             </button>
-            <textarea maxLength={200} rows={3} value={defaultMessage} onChange={handleChange} placeholder="Ask any questions about me, and the AI assistant will help answer them" 
+            <textarea maxLength={200} rows={3} value={defaultMessage} onKeyDown ={handleKeyPress} onChange={handleChange} placeholder="Ask any questions about me, and the AI assistant will help answer them" 
             className=" min-h-16 p-3 resize-none  caret-blue-100 focus:caret-indigo-500 w-full " />
             <div ref = {chatContainerRef} className=" grow flex flex-col overflow-y-auto mb-3">
             {

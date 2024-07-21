@@ -39,19 +39,13 @@ export default async function Home() {
                  <AboutMe basicInfo={basicInformation}/>
               </div>
               <div id="Education">
-               
                   <Educations name={basicInformation.name} />
-                
               </div>
               <div id="Skills">
-                
-                    <SkillsComponent name ={basicInformation.name}  />
-                 
+                  <SkillsComponent name ={basicInformation.name}  />
               </div>
               <div id="Certification">
-                  
-                      <Certifications name ={basicInformation.name}/>
-                 
+                    <Certifications name ={basicInformation.name}/>
               </div>
               <div>
                  <SupportView />

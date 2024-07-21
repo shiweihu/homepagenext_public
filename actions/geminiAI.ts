@@ -32,16 +32,17 @@ import {readMyInfo} from "@/actions/buketAction";
  export default async function askAI(chatHistory:string[],newMessage:string) {
     console.debug("askAI GEMINI_API_KEY",process.env.GEMINI_API_KEY)
     if(myBasicInfo.length === 0){
-      myBasicInfo = await readMyInfo() 
+      myBasicInfo = await readMyInfo()
     }
 
     const history = [
         {
           role: "user",
           parts: [
-            {text: "You will act as my assistant and answer questions from my employer. Please respond in the first person, as if you are me.this is my personal information:"},
+            {text: "You will act as my assistant and answer questions from my employer. Please respond in the first person, as if you are me.below is my personal information:\n"},
             {text: myBasicInfo},
-            {text: "Please answer questions about me, and refuse to answer any questions that do not concern me."}
+            {text: "\nPlease answer questions about me, and refuse to answer any questions that do not concern me."},
+            {text:"\nMy resume summary should be positive and aim to enhance HR impression of me."}
           ],
         },
         {
@@ -92,7 +93,7 @@ import {readMyInfo} from "@/actions/buketAction";
     try{
       return  (await chatSession.sendMessage(newMessage)).response.text();
     }catch(e){
-      console.error("askAI",e)
+      console.error("askAI error",e)
       return "error"
     }
   

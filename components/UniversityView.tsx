@@ -19,14 +19,14 @@ export function UniversityView({educations}:{educations:Education[]}){
             {
                 educations.map((item,index)=>(
                     
-                    <motion.div key={index}  initial={{ x:  2000 }} animate={{x: isInView ? 0 : 2000 }}
+                    <motion.div key={index}  initial={{ x:  1000 }} animate={{x: isInView ? 0 : 1000 }}
                                 transition={{ type: "spring" ,duration: 1}}   className="flex flex-row justify-center items-center py-32 mx-5 " >
-                        <Image  className="mr-2" src = {item.image_signUrl} unoptimized={true} alt={item.Uniname} width={50} height={75} />
+                        <Image  className="mr-2" src = {item.image_signUrl} unoptimized={true} alt={item.Uniname} width={100} height={125} />
                         
                         <div className="flex flex-col">
                             <p className=" font-serif text-2xl ">{item.Uniname}</p>
                             <p className=" font-mono text-base ">{item.degree}</p>
-                            <p className=" font-thin italic">{item.period}</p>
+                            <p className=" font-normal italic">{item.period}</p>
                         </div>
                     </motion.div >
                 ))
